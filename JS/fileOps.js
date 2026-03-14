@@ -31,6 +31,13 @@ function destroyModal() {
     $("#modal").remove();
 }
 
+function createSaveModal(name) {
+     $("#topbar").append(`<div id="save-modal">
+        <a>FA "${name}" has been saved successfully</a>
+    </div>`);
+    $("#save-modal").fadeTo(3000,0, () => $("#save-modal").remove()) 
+}
+
 function newFA(m) {
     two.clear();
     for (let e of renders) {
@@ -87,6 +94,8 @@ function saveFA(m) {
     let m_serialised = JSON.stringify(m_modified);
 
     localStorage.setItem(m.name, m_serialised);
+
+    createSaveModal(m.name);
 
     return true;
 }
