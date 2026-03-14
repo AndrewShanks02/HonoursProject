@@ -1,0 +1,42 @@
+{
+	"folders": [
+		{
+			"path": "../../OneDrive/Documents/code"
+		},
+		{
+			"path": "../../Protohome"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../Documents/code/F20BC"
+		},
+		{
+			"path": "../../Documents/code/F20CN"
+		},
+		{
+			"path": "../../Documents/code"
+		},
+		{
+			"path": "../../OneDrive/Documents/IntRobCW_Task_1_and_2/controllers"
+		},
+		{
+			"path": "../../OneDrive/Documents/BalatroModding"
+		},
+		{
+			"path": "../../AppData/Roaming/Balatro/Mods/SimpleMod"
+		},
+		{
+			"path": "\\\\wsl.localhost\\Ubuntu\\home\\andrew\\f20dp"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/*.rpyc": true,
+			"**/*.rpa": true,
+			"**/*.rpymc": true,
+			"**/cache/": true
+		}
+	}
+}
