@@ -162,7 +162,6 @@ class NFA extends FA {
         if (src < this.numStates && dest < this.numStates) {
             if (this.transitions.has(src)) {
                 let val = this.transitions.get(src);
-                console.log(this.transitions.get(src));
 
                 let dests = val.get(char);
                 
@@ -208,7 +207,7 @@ class NFA extends FA {
     removeState(state) {
         if (this.isFinal(state))
             this.removeAcceptingState(state);
-        
+
         // update states greater than the removed one
         for (let i = state+1; i < this.numStates; i++) {
             let val = this.transitions.get(i);

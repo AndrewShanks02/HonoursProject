@@ -38,7 +38,7 @@ function createSaveModal(name) {
     $("#save-modal").fadeTo(3000,0, () => $("#save-modal").remove()) 
 }
 
-function newFA(m) {
+function newFA() {
     two.clear();
     for (let e of renders) {
         e.remove();

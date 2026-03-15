@@ -87,12 +87,10 @@ function union(m, n) {
         return mn;
     }
 
-    let k = m.numStates;
-
     let mn = new NFA(
         `${m.name}+${n.name}`,
         m.numStates + n.numStates,
-        m.initialState,
+        0,
         new Map(),
         m.acceptingStates.union(new Set(Array.from(n.acceptingStates).map(x => x+m.numStates))),
         combineAlphabets(m.alphabet, n.alphabet)
@@ -102,11 +100,11 @@ function union(m, n) {
     let q0 = mn.numStates-1;
     mn.setInitialState(q0);
 
-    mn.addTransition(q0, n.initialState+m.numStates, '');
     mn.addTransition(q0, m.initialState, '');
+    mn.addTransition(q0, m.numStates+n.initialState, '');
 
     for (let i = 0; i < m.numStates; i++) {
-        for (let c of m.alphabet.concat([''])) {
+        for (let c of m.alphabet.split('').concat([''])) {
             if (m instanceof NFA) {
                 let dests = m.applyRules(i,c);
                 for (let dest of dests) {
@@ -120,7 +118,7 @@ function union(m, n) {
     }
 
     for (let i = 0; i < n.numStates; i++) {
-        for (let c of n.alphabet.concat([''])) {
+        for (let c of n.alphabet.split('').concat([''])) {
             if (n instanceof NFA) {
                 let dests = n.applyRules(i,c);
                 for (let dest of dests) {
