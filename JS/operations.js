@@ -83,7 +83,7 @@ function union(m, n) {
                 complement(n)
             )
         );
-        mn.name = `${m.name}+${m.name}`;
+        mn.name = `${m.name}⋃${m.name}`;
         return mn;
     }
 
