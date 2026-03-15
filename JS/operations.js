@@ -6,7 +6,7 @@ function shift(m, k) {
             m.acceptingStates.add(i+k);
         }
         let val = m.transitions.get(i);
-        for (let c of Array.from(m.alphabet).concat([''])) {
+        for (let c of m.alphabet.split('').concat([''])) {
             if (!val.has(c))
                 continue;
 
@@ -88,7 +88,7 @@ function union(m, n) {
     }
 
     let mn = new NFA(
-        `${m.name}+${n.name}`,
+        `${m.name}⋃${n.name}`,
         m.numStates + n.numStates,
         0,
         new Map(),
@@ -259,7 +259,7 @@ function concatenation(m, n) {
         }
 
         for (let i = 0; i < m.numStates; i++) {
-            for (let c of m.alphabet.concat([''])) {
+            for (let c of m.alphabet.split('').concat([''])) {
                 if (m instanceof NFA) {
                     let dests = m.applyRules(i,c);
                     for (let dest of dests) {
@@ -273,7 +273,7 @@ function concatenation(m, n) {
         }
         
         for (let i = 0; i < n.numStates; i++) {
-            for (let c of n.alphabet.concat([''])) {
+            for (let c of n.alphabet.split('').concat([''])) {
                 if (n instanceof NFA) {
                     let dests = n.applyRules(i,c);
                     for (let dest of dests) {

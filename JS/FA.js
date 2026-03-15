@@ -245,11 +245,11 @@ class NFA extends FA {
             return []
         
         return x.get(char) || [];
-
     }
     
     run(word) {
         let q = [[this.initialState, word]];
+        let s = new Set();
 
         while (q.length > 0) {
             let [currentState, word] = q.shift();
@@ -265,29 +265,19 @@ class NFA extends FA {
 
             let transitions = this.applyRules(currentState, c);
             let etransitions = this.applyRules(currentState, '');
-            let flag = false;
+
+            s.add(`${currentState},"${word}"`);
+            
             for (let state of transitions) {
                 let w = word.substring(1);
                 
-                for (let entry of q) {
-                    if (entry[0] == state && entry[1] == w) {
-                        flag = true;
-                    }
-                }
-                if (!flag)
+                if (!s.has(`${state},"${w}"`))
                     q.push([state, w]);
-                flag = false;
             }
 
             for (let state of etransitions) {
-                for (let entry of q) {
-                    if (entry[0] == state && entry[1] == word) {
-                        flag = true;
-                    }
-                }
-                if (!flag)
+                if (!s.has(`${state},"${word}"`))
                     q.push([state, word]);
-                flag = false;
             }
         }
         return false;
