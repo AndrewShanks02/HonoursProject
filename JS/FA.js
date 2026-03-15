@@ -124,6 +124,11 @@ class DFA extends FA {
                 val.set(c, dest);
             }
             this.transitions.set(i-1, val);
+
+            if (this.isFinal(i)) {
+                this.removeAcceptingState(i);
+                this.addAcceptingState(i-1);
+            }
         }
         this.transitions.delete(--this.numStates);
     }
@@ -157,19 +162,19 @@ class NFA extends FA {
         if (src < this.numStates && dest < this.numStates) {
             if (this.transitions.has(src)) {
                 let val = this.transitions.get(src);
+                console.log(this.transitions.get(src));
 
                 let dests = val.get(char);
                 
                 if (char != '' && !this.alphabet.includes(char))
                     this.addToAlphabet(char);
 
+
                 if (dests == undefined) {
-                    this.transitions.set(
-                        src,
-                        new Map([[char, [dest]]])
-                    )
+                    val.set(char, [dest]);
                     return;
                 }
+
                     
                 if (dests.includes(dest))
                     return;
@@ -196,10 +201,14 @@ class NFA extends FA {
 
         let dests = val.get(char);
         let i = dests.indexOf(dest);
+
         dests.splice(i,1)
     }
 
     removeState(state) {
+        if (this.isFinal(state))
+            this.removeAcceptingState(state);
+        
         // update states greater than the removed one
         for (let i = state+1; i < this.numStates; i++) {
             let val = this.transitions.get(i);

@@ -600,7 +600,7 @@ $("#transition-button-ctx").on("click", () => {
         while (i < cs.length) {
             let c = cs[i];
 
-            if (c == ',') {
+            if (c == ',' || c == ' ') {
                 i++;
                 continue;
             }
