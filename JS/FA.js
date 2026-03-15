@@ -159,14 +159,21 @@ class NFA extends FA {
                 let val = this.transitions.get(src);
 
                 let dests = val.get(char);
+                
+                if (char != '' && !this.alphabet.includes(char))
+                    this.addToAlphabet(char);
 
-                if (dests == null) {
-                    val.set(char, [dest]);
+                if (dests == undefined) {
+                    this.transitions.set(
+                        src,
+                        new Map([[char, [dest]]])
+                    )
                     return;
                 }
                     
                 if (dests.includes(dest))
                     return;
+
 
                 val.set(char,dests.concat(dest));
             } else {
