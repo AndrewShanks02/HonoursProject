@@ -593,7 +593,7 @@ $("#transition-button-ctx").on("click", () => {
         let cs = window.prompt("enter a character/characters to transition on (use commas if multiple). Use /e for epsilon", transitions[contextSelectorEdge[0]][contextSelectorEdge[1]].replaceAll(/ε/g, "/e"));
         
         let i = 0
-        for (let c of currentFA.alphabet) {
+        for (let c of currentFA.alphabet.split('').concat('')) {
             currentFA.removeTransition(contextSelectorEdge[0], contextSelectorEdge[1], c);
         }
 
