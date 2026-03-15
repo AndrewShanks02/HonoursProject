@@ -203,6 +203,12 @@ class NFA extends FA {
         // update states greater than the removed one
         for (let i = state+1; i < this.numStates; i++) {
             let val = this.transitions.get(i);
+
+            if (this.isFinal(i)) {
+                this.removeAcceptingState(i);
+                this.addAcceptingState(i-1);
+            }
+
             if (!val)
                 continue;
 
