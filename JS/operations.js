@@ -237,71 +237,50 @@ function difference(m, n) {
 }
 
 function concatenation(m, n) {
-    let k = m.numStates;
     let mn = null;
 
-    if (m instanceof NFA || n instanceof NFA) {
-        mn = new NFA(
-            `${m.name}○${n.name}`,
-            m.numStates + n.numStates,
-            m.initialState,
-            new Map(),
-            new Set(Array.from(n.acceptingStates).map(x => x+m.numStates)),
-            combineAlphabets(m.alphabet, n.alphabet)
+    mn = new NFA(
+        `${m.name}○${n.name}`,
+        m.numStates + n.numStates,
+        m.initialState,
+        new Map(),
+        new Set(Array.from(n.acceptingStates).map(x => x+m.numStates)),
+        combineAlphabets(m.alphabet, n.alphabet)
+    );
+
+    for (let qf of m.acceptingStates.keys()) {
+        mn.addTransition(
+            qf,
+            n.initialState+m.numStates,
+            ''
         );
+    }
 
-        for (let qf of m.acceptingStates.keys()) {
-            mn.addTransition(
-                qf,
-                n.initialState+m.numStates,
-                ''
-            );
-        }
-
-        for (let i = 0; i < m.numStates; i++) {
-            for (let c of m.alphabet.split('').concat([''])) {
-                if (m instanceof NFA) {
-                    let dests = m.applyRules(i,c);
-                    for (let dest of dests) {
-                        mn.addTransition(i, dest, c);
-                    }
-                } else {
-                    let dest = m.applyRules(i,c);
+    for (let i = 0; i < m.numStates; i++) {
+        for (let c of m.alphabet.split('').concat([''])) {
+            if (m instanceof NFA) {
+                let dests = m.applyRules(i,c);
+                for (let dest of dests) {
                     mn.addTransition(i, dest, c);
                 }
+            } else {
+                let dest = m.applyRules(i,c);
+                mn.addTransition(i, dest, c);
             }
         }
-        
-        for (let i = 0; i < n.numStates; i++) {
-            for (let c of n.alphabet.split('').concat([''])) {
-                if (n instanceof NFA) {
-                    let dests = n.applyRules(i,c);
-                    for (let dest of dests) {
-                        mn.addTransition(i+m.numStates, dest+m.numStates, c);
-                    }
-                } else {
-                    let dest = n.applyRules(i,c);
+    }
+    
+    for (let i = 0; i < n.numStates; i++) {
+        for (let c of n.alphabet.split('').concat([''])) {
+            if (n instanceof NFA) {
+                let dests = n.applyRules(i,c);
+                for (let dest of dests) {
                     mn.addTransition(i+m.numStates, dest+m.numStates, c);
                 }
+            } else {
+                let dest = n.applyRules(i,c);
+                mn.addTransition(i+m.numStates, dest+m.numStates, c);
             }
-        }
-    } else {
-        shift(shifted_n, k-1);
-        mn = new DFA(
-            `${m.name}○${n.name}`,
-            m.numStates + n.numStates-1,
-            m.initialState,
-            mapUnion(m.transitions, shifted_n.transitions),
-            shifted_n.acceptingStates,
-            combineAlphabets(m.alphabet, n.alphabet)
-        );
-
-        let tfq0 = shifted_n.transitions.get(n.initialState);
-        for (let qf of m.acceptingStates.keys()) {
-            mn.set(
-                qf,
-                structuredClone(tfq0)
-            );
         }
     }
 
@@ -365,8 +344,6 @@ function determinise(nfa) {
             } else {
                 dfa.addState();
                 stateMap.set(qns+"", dfa.numStates-1);
-                console.log(stateMap.get(qs+""));
-                console.log(dfa.numStates-1)
                 dfa.addTransition(stateMap.get(qs+""), dfa.numStates-1, c);
                 
                 for (let qi of qns) {
