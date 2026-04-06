@@ -43,20 +43,21 @@
             </div>
             <input id="name-box" placeholder="New FA" type="text" style="height:15px; margin-top:40px; margin-left:350px; text-align: center;">
 
-            <!-- <div id="save-modal">
-                <a>Lorem ipsum dolor sit amet consectetur adipisicing elit. Suscipit aspernatur odit soluta dolore quae illum sapiente tenetur quod assumenda modi minus quos quas iusto ipsam distinctio, vel vero sequi corporis.</a>
-            </div> -->
         </div>
         <div class="flex-container" style="height:100%;">
             <div class="flex-child leftbar">
+                <div style="text-align: center; background-color: white; margin-left:9px; margin-right:10px;">Add State</div>
                 <img class="side-button" src="./Assets/nodeTool.png" style="margin-left:13px;" onclick="addState()" />
+                <div style="text-align: center; background-color: white; margin-left:9px; margin-right:10px;">Transition Tool</div>
                 <img class="side-button" id="transition-tool" src="./Assets/transitionTool.png" style="margin-left:13px;"/>
+                <div style="text-align: center; background-color: white; margin-left:9px; margin-right:10px;">Move Tool</div>
                 <img class="side-button button-selected" id="selection-tool"src="./Assets/selectTool.png" style="margin-left:13px;"/>
-                <br /> <br />
+                <br> <br>
+                <div style="text-align: center; background-color: white; margin-left:9px; margin-right:10px;">Run Automaton on string</div>
                 <input id="string-box" placeholder="word" type="text" style="width:130px; margin-left:8px;">
                 <button id="execute-button" style="margin-left: 45px;">Execute</button>
             </div>
-            <div class="flex-child canvas">
+            <div class="flex-child canvas" style="user-select:none; -ms-user-select: none; -webkit-user-select: none;">
                 <div id="context-menu" style="display: none; position:absolute;">
                     <ul>
                         <li id="delete-button-ctx" class="context-list node-operation edge-operation">Delete</li>
